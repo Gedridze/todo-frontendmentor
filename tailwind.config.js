@@ -12,6 +12,9 @@ module.exports = {
       'd-gray-blue': '#9394a5',
       'vd-gray-blue': '#484b6a'
     },
+    fontFamily: {
+      "sans": ['Josefin Sans', 'sans']
+    },
     extend: {}
   },
   plugins: []
