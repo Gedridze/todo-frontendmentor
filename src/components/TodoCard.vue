@@ -5,7 +5,6 @@ const isComplete = ref(false)
 </script>
 <template>
   <div>
-    <TodoCheckBox v-model="isComplete" />
-		{{ isComplete }}
+    <TodoCheckBox v-model="isComplete"/>
   </div>
 </template>

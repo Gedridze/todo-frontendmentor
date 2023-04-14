@@ -7,7 +7,7 @@ import TodoCard from './components/TodoCard.vue';
     </div>
   <div class="p-10">
     <h1 class="text-vl-gray">TODO</h1>
-    <TodoCard />
+    <TodoCard/>
   </div>
 </template>
 
