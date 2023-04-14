@@ -8,20 +8,19 @@ const emit = defineEmits<{
 
 function onChange(evt: Event) {
   evt.preventDefault()
-  console.log((evt.target as HTMLInputElement).checked)
   emit('update:modelValue', (evt.target as HTMLInputElement).checked)
 }
 </script>
 <template>
   <div class="w-fit">
     <label
-      class="border border-solid border-d-gray-blue bg-vl-gray block p-1 rounded-full hover:bg-vl-gray-blue hover:cursor-pointer"
+      class="border border-solid border-d-gray-blue bg-vl-gray block p-1 rounded-full hover:cursor-pointer h-5 w-5"
       :class="{ checked: modelValue }"
     >
       <div>
         <img
           src="src/assets/static/icon-check.svg"
-          class="h-4 m-auto"
+          class="m-auto"
           :class="{ invisible: !modelValue }"
         />
         <input

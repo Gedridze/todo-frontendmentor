@@ -5,11 +5,12 @@
 
 @layer base {
   html {
+    @apply leading-tight;
     font-size: 18px;
   }
 
   h1 {
-    @apply text-3xl font-bold;
+    @apply text-2xl font-bold;
     letter-spacing: 0.5rem;
   }
 }
