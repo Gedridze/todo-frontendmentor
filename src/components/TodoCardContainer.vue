@@ -60,10 +60,10 @@ const activeFilter = ref<FilterType>('all')
         <p class="pointer-events-none">{{ todos.filter(item => !item.isComplete).length }} items left</p>
       </template>
       <template #content>
-        <div class="hidden sm:block">
-          <div v-bind="bindProps('all')">All</div>
-          <div v-bind="bindProps('active')">Active</div>
-          <div v-bind="bindProps('completed')">Completed</div>
+        <div class="hidden ml-auto text-xs font-bold cursor-pointer sm:flex">
+        <div v-bind="bindProps('all')" class="mr-2 hover:text-vd-gray-blue">All</div>
+        <div v-bind="bindProps('active')" class="ml-2 mr-2 hover:text-vd-gray-blue">Active</div>
+        <div v-bind="bindProps('completed')" class="ml-2 hover:text-vd-gray-blue">Completed</div>
         </div>
       </template>
       <template #footer>

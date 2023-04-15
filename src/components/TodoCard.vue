@@ -46,7 +46,7 @@ function submitTodo(evt: Event) {
       <TodoCheckBox :disabled="!activeCheckbox" v-model="todoItem.isComplete" />
     </template>
     <template #content>
-      <div class="flex w-full pr-3 cursor-pointer" :class="{hoverable: !$slots.default}" @click="emit('removeTodo', [ todoItem ])">
+      <div class="flex w-full pr-3" :class="{'hoverable cursor-pointer': !activeInput}" @click="emit('removeTodo', [ todoItem ])">
       <form @submit="submitTodo" class="w-full" >
         <input
           type="text"
@@ -60,7 +60,7 @@ function submitTodo(evt: Event) {
     </div>
   </template>
   <template #footer>
-    <img v-if="deletable" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="src/assets/static/icon-cross.svg">
+    <img v-if="deletable" @click="emit('removeTodo', [ todoItem ])" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="src/assets/static/icon-cross.svg">
     </template>
   </BaseCard>
 </template>
