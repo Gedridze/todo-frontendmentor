@@ -46,19 +46,21 @@ function submitTodo(evt: Event) {
       <TodoCheckBox :disabled="!activeCheckbox" v-model="todoItem.isComplete" />
     </template>
     <template #content>
-      <div class="flex justify-between" :class="{hoverable: !$slots.default}" @click="emit('removeTodo', todoItem)">
+      <div class="flex w-full pr-3" :class="{hoverable: !$slots.default}" @click="emit('removeTodo', todoItem)">
       <form @submit="submitTodo" class="w-full" >
         <input
           type="text"
           :class="{ 'line-through text-l-gray-blue': todoItem.isComplete, 'pointer-events-none': !activeInput }"
-          class="w-full ml-3 text-xs font-normal outline-none decoration-d-gray-blue bg-vl-gray text-vd-gray-blue placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
+          class="w-full pl-3 text-xs font-normal outline-none decoration-d-gray-blue bg-vl-gray text-vd-gray-blue placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
           :placeholder="placeholder"
           ref="input"
           v-model="todoItem.task"
         />
       </form>
-      <img v-if="deletable" class="h-full mt-auto mb-auto ml-auto w-fit" src="src/assets/static/icon-cross.svg">
-      </div>
+    </div>
+  </template>
+  <template #footer>
+    <img v-if="deletable" class="h-full mt-auto mb-auto ml-auto w-fit" src="src/assets/static/icon-cross.svg">
     </template>
   </BaseCard>
 </template>
@@ -68,7 +70,7 @@ function submitTodo(evt: Event) {
 img {
   display: none;
 }
-.hoverable:hover img {
+.hoverable:hover + img {
   display: block;
 }
 </style>
