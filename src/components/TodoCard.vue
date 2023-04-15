@@ -50,8 +50,8 @@ function submitTodo(evt: Event) {
       <form @submit="submitTodo" class="w-full" >
         <input
           type="text"
-          :class="{ 'line-through text-l-gray-blue': todoItem.isComplete, 'pointer-events-none': !activeInput }"
-          class="w-full pl-3 text-xs font-normal outline-none decoration-d-gray-blue bg-vl-gray text-vd-gray-blue placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
+          class="w-full pl-3 text-xs font-normal outline-none decoration-d-gray-blue bg-vl-gray placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
+          :class="{ 'line-through text-l-gray-blue': todoItem.isComplete, 'text-vd-gray-blue': !todoItem.isComplete, 'pointer-events-none': !activeInput }"
           :placeholder="placeholder"
           ref="input"
           v-model="todoItem.task"

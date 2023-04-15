@@ -6,7 +6,7 @@ import { ref } from 'vue'
 
 export type Todo = {
   isComplete: boolean
-  task: string,
+  task: string
   id: string
 }
 
@@ -33,9 +33,9 @@ function bindProps(type: FilterType) {
 const filteredTodos = computed(() => {
   switch (activeFilter.value) {
     case 'completed':
-      return props.todos.filter(item => item.isComplete)
+      return props.todos.filter((item) => item.isComplete)
     case 'active':
-      return props.todos.filter(item => !item.isComplete)
+      return props.todos.filter((item) => !item.isComplete)
     default:
       return props.todos
   }
@@ -52,24 +52,47 @@ const activeFilter = ref<FilterType>('all')
       :active-input="false"
       @remove-todo="(item: Todo[]) => emit('removeTodo', item )"
     ></TodoCard>
-    <BaseCard class="text-xs rounded-t-none text-d-gray-blue">
-    <template #header>
-      <p>
-        {{ todos.length }} items left
-      </p>
-    </template>
-    <template #content>
-      <div class="hidden sm:block">
-        <div v-bind="bindProps('all')">All</div>
-        <div v-bind="bindProps('active')">Active</div>
-        <div v-bind="bindProps('completed')">Completed</div>
-      </div>
-    </template>
-    <template #footer>
-      <div class="ml-auto cursor-pointer hover:text-vd-gray-blue" @click="emit('removeTodo', todos.filter(item => item.isComplete))">
-        Clear completed
-      </div>
-    </template>
+    <BaseCard
+      class="text-xs text-d-gray-blue"
+      :class="{ 'rounded-t-none': filteredTodos.length > 0 }"
+    >
+      <template #header>
+        <p class="pointer-events-none">{{ todos.filter(item => !item.isComplete).length }} items left</p>
+      </template>
+      <template #content>
+        <div class="hidden sm:block">
+          <div v-bind="bindProps('all')">All</div>
+          <div v-bind="bindProps('active')">Active</div>
+          <div v-bind="bindProps('completed')">Completed</div>
+        </div>
+      </template>
+      <template #footer>
+        <div
+          class="ml-auto cursor-pointer hover:text-vd-gray-blue"
+          @click="
+            emit(
+              'removeTodo',
+              todos.filter((item) => item.isComplete)
+            )
+          "
+        >
+          Clear completed
+        </div>
+      </template>
     </BaseCard>
   </div>
+  <BaseCard class="mt-5">
+    <template #content>
+      <div class="flex m-auto text-sm font-bold cursor-pointer sm:hidden text-d-gray-blue">
+        <div v-bind="bindProps('all')" class="mr-2">All</div>
+        <div v-bind="bindProps('active')" class="ml-2 mr-2">Active</div>
+        <div v-bind="bindProps('completed')" class="ml-2">Completed</div>
+      </div>
+    </template></BaseCard
+  >
 </template>
+<style>
+.is-active {
+  @apply text-b-blue
+}
+</style>

@@ -19,13 +19,13 @@ function removeTodo(deletedTodo: Todo[]) {
 }
 </script>
 <template>
-  <div class="absolute flex flex-col w-screen min-h-screen bg-vl-gray -z-10">
+  <div class="absolute flex flex-col w-screen min-h-screen bg-vl-gray-blue -z-10">
     <img src="./assets/static/bg-mobile-light.jpg" class="h-1/6" alt="bg-mobile-light" />
   </div>
   <div class="p-3 pt-7">
     <h1 class="mb-3 text-vl-gray">TODO</h1>
-    <TodoCard :deletable="false" :active-checkbox="false" placeholder="Create new item..." @submit-todo="addTodo"/>
-    <TodoCardContainer :todos="todos" class="mt-5" @removeTodo="removeTodo"></TodoCardContainer>
+    <TodoCard class="mb-5" :deletable="false" :active-checkbox="false" placeholder="Create new item..." @submit-todo="addTodo"/>
+    <TodoCardContainer :todos="todos" @removeTodo="removeTodo"></TodoCardContainer>
   </div>
 </template>
 
