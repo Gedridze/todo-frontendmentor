@@ -1,7 +1,13 @@
 <script setup lang="ts">
-defineProps<{
-  modelValue: boolean
-}>()
+withDefaults(
+  defineProps<{
+    modelValue: boolean,
+    disabled? :boolean
+  }>(),
+  {
+    disabled: false
+  }
+)
 const emit = defineEmits<{
   (event: 'update:modelValue', value: boolean): void
 }>()
@@ -14,8 +20,8 @@ function onChange(evt: Event) {
 <template>
   <div class="w-fit">
     <label
-      class="border border-solid border-d-gray-blue bg-vl-gray block p-1 rounded-full hover:cursor-pointer h-5 w-5"
-      :class="{ checked: modelValue }"
+      class="block w-5 h-5 p-1 border border-solid rounded-full border-d-gray-blue bg-vl-gray"
+      :class="{ checked: modelValue, 'cursor-pointer' : !disabled }"
     >
       <div>
         <img
@@ -24,6 +30,7 @@ function onChange(evt: Event) {
           :class="{ invisible: !modelValue }"
         />
         <input
+        :disabled="disabled"
           type="checkbox"
           name="checkbox"
           class="hidden"

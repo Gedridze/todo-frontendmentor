@@ -1,40 +1,74 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import TodoCheckBox from './TodoCheckBox.vue'
+import type { Todo } from './TodoCardContainer.vue'
+import BaseCard from './BaseCard.vue'
+
 const input = ref<HTMLInputElement>()
-defineProps<{
-	text?: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    todo?: Todo
+    activeCheckbox?: boolean
+    activeInput: boolean
+    placeholder?: string,
+    deletable: boolean
+  }>(),
+  {
+    activeCheckbox: true,
+    activeInput: true,
+    deletable: true,
+  }
+)
+
+const todoItem = ref<Todo>(props.todo ? props.todo: {
+  id: Math.random().toString(),
+  isComplete: false,
+  task: ''
+})
 
 const emit = defineEmits<{
   (e: 'submitTodo', value: string): void
+  (e: 'update:todo', value: Todo): void,
+  (e: 'removeTodo', todo: Todo): void
 }>()
 
 function submitTodo(evt: Event) {
-  evt.preventDefault();
+  evt.preventDefault()
   const inputElement = input.value as HTMLInputElement
   emit('submitTodo', inputElement.value)
   inputElement.value = ''
   inputElement.blur()
 }
-const isComplete = ref(false)
 </script>
 <template>
-  <div class="bg-vl-gray w-full p-3 pl-3 pr-3 rounded-lg flex text-center">
-    <template v-if="$slots.default">
-    <slot />
-  </template>
-  <template v-else>
-    <TodoCheckBox v-model="isComplete"/>
-    <form @submit="submitTodo">
-      <input
-        type="text"
-        class="ml-3 text-xs bg-vl-gray text-vd-gray-blue font-normal outline-none placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
-        :placeholder="text"
-        ref="input"
-      />
-    </form>
-
-  </template>
-  </div>
+  <BaseCard>
+    <template #header>
+      <TodoCheckBox :disabled="!activeCheckbox" v-model="todoItem.isComplete" />
+    </template>
+    <template #content>
+      <div class="flex justify-between" :class="{hoverable: !$slots.default}" @click="emit('removeTodo', todoItem)">
+      <form @submit="submitTodo" class="w-full" >
+        <input
+          type="text"
+          :class="{ 'line-through text-l-gray-blue': todoItem.isComplete, 'pointer-events-none': !activeInput }"
+          class="w-full ml-3 text-xs font-normal outline-none decoration-d-gray-blue bg-vl-gray text-vd-gray-blue placeholder:text-d-gray-blue focus:placeholder:text-l-gray-blue"
+          :placeholder="placeholder"
+          ref="input"
+          v-model="todoItem.task"
+        />
+      </form>
+      <img v-if="deletable" class="h-full mt-auto mb-auto ml-auto w-fit" src="src/assets/static/icon-cross.svg">
+      </div>
+    </template>
+  </BaseCard>
 </template>
+<style scoped>
+
+
+img {
+  display: none;
+}
+.hoverable:hover img {
+  display: block;
+}
+</style>
