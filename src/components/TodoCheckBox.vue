@@ -25,7 +25,7 @@ function onChange(evt: Event) {
     >
       <div>
         <img
-          src="src/assets/static/icon-check.svg"
+          src="/src/assets/static/icon-check.svg"
           class="m-auto"
           :class="{ invisible: !modelValue }"
         />

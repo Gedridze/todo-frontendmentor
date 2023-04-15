@@ -30,7 +30,8 @@ setDarkModeClasses(darkMode.value)
     <div class="p-3 ml-auto mr-auto sm:max-w-xl pt-7 sm:pt-12">
       <div class="flex justify-between mb-3 sm:mb-6">
         <h1 class="text-vl-gray sm:text-3xl">TODO</h1>
-        <img :src="`src/assets/static/icon-${darkMode? 'sun' : 'moon'}.svg`" alt="mode-icon" class="h-full w-fit" @click="toggleDarkMode">
+        <img v-if="darkMode" src="/src/assets/static/icon-sun.svg" alt="mode-icon" class="h-full w-fit" @click="toggleDarkMode">
+        <img v-else src="/src/assets/static/icon-moon.svg" alt="mode-icon" class="h-full w-fit" @click="toggleDarkMode">
       </div>
       <TodoCard class="mb-5" :deletable="false" :active-checkbox="false" placeholder="Create new item..." @submit-todo="todo => todoStore.addTodo(todo)"/>
       <TodoCardContainer ></TodoCardContainer>
@@ -40,19 +41,19 @@ setDarkModeClasses(darkMode.value)
 
 <style scoped>
 .bg-image {
-  content: url('src/assets/static/bg-mobile-light.jpg');
+  content: url('/src/assets/static/bg-mobile-light.jpg');
 }
 
 .dark .bg-image {
-  content: url('src/assets/static/bg-mobile-dark.jpg');
+  content: url('/src/assets/static/bg-mobile-dark.jpg');
 }
 
 @media (min-width: 640px) {
     .bg-image {
-      content: url('src/assets/static/bg-desktop-light.jpg');
+      content: url('/src/assets/static/bg-desktop-light.jpg');
     }
     .dark .bg-image {
-  content: url('src/assets/static/bg-desktop-dark.jpg');
+  content: url('/src/assets/static/bg-desktop-dark.jpg');
 }
 }
 </style>

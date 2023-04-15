@@ -60,7 +60,7 @@ function submitTodo(evt: Event) {
     </div>
   </template>
   <template #footer>
-    <img v-if="deletable" @click="emit('removeTodo', todoItem)" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="src/assets/static/icon-cross.svg">
+    <img v-if="deletable" @click="emit('removeTodo', todoItem)" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="/src/assets/static/icon-cross.svg">
     </template>
   </BaseCard>
 </template>
