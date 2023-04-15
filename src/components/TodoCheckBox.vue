@@ -20,7 +20,7 @@ function onChange(evt: Event) {
 <template>
   <div class="w-fit">
     <label
-      class="block w-5 h-5 p-1 border border-solid rounded-full border-d-gray-blue bg-vl-gray"
+      class="block w-5 h-5 p-1 border border-solid rounded-full border-d-gray-blue dark:border-d-grayish-blue bg-vl-gray dark:bg-vd-destat-blue"
       :class="{ checked: modelValue, 'cursor-pointer' : !disabled }"
     >
       <div>

@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="flex w-full text-center rounded-lg card-container bg-vl-gray">
+  <div class="flex w-full text-center rounded-lg card-container bg-vl-gray dark:bg-vd-destat-blue">
       <slot name="header"></slot>
       <slot name="content"></slot>
       <slot name="footer"></slot>

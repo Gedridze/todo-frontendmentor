@@ -35,7 +35,7 @@ const activeFilter = ref<FilterType>('all')
 <template>
   <div class="rounded-lg shadow-xl">
     <TodoCard
-      class="border-b rounded-none first:rounded-t-lg border-l-gray-blue"
+      class="border-b rounded-none first:rounded-t-lg border-l-gray-blue dark:border-d-grayish-blue"
       v-for="todo in filteredTodos"
       :key="todo.id"
       :todo="todo"
@@ -63,7 +63,7 @@ const activeFilter = ref<FilterType>('all')
       </template>
     </BaseCard>
   </div>
-  <BaseCard class="mt-5">
+  <BaseCard class="mt-5 shadow-xl">
     <template #content>
       <div class="flex m-auto text-sm font-bold cursor-pointer sm:hidden text-d-gray-blue">
         <div v-bind="bindProps('all')" class="mr-2">All</div>
