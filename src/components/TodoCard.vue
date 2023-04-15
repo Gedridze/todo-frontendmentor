@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import TodoCheckBox from './TodoCheckBox.vue'
-import type { Todo } from './TodoCardContainer.vue'
+import type { Todo } from '@/stores/todos'
 import BaseCard from './BaseCard.vue'
 
 const input = ref<HTMLInputElement>()
@@ -29,7 +29,7 @@ const todoItem = ref<Todo>(props.todo ? props.todo: {
 const emit = defineEmits<{
   (e: 'submitTodo', value: string): void
   (e: 'update:todo', value: Todo): void,
-  (e: 'removeTodo', todo: Todo[]): void
+  (e: 'removeTodo', todo: Todo): void
 }>()
 
 function submitTodo(evt: Event) {
@@ -46,7 +46,7 @@ function submitTodo(evt: Event) {
       <TodoCheckBox :disabled="!activeCheckbox" v-model="todoItem.isComplete" />
     </template>
     <template #content>
-      <div class="flex w-full pr-3" :class="{'hoverable cursor-pointer': !activeInput}" @click="emit('removeTodo', [ todoItem ])">
+      <div class="flex w-full pr-3" :class="{'hoverable cursor-pointer': !activeInput}" @click="emit('removeTodo', todoItem)">
       <form @submit="submitTodo" class="w-full" >
         <input
           type="text"
@@ -60,7 +60,7 @@ function submitTodo(evt: Event) {
     </div>
   </template>
   <template #footer>
-    <img v-if="deletable" @click="emit('removeTodo', [ todoItem ])" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="src/assets/static/icon-cross.svg">
+    <img v-if="deletable" @click="emit('removeTodo', todoItem)" class="h-full mt-auto mb-auto ml-auto cursor-pointer w-fit" src="src/assets/static/icon-cross.svg">
     </template>
   </BaseCard>
 </template>

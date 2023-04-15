@@ -3,21 +3,11 @@ import { computed } from 'vue'
 import BaseCard from './BaseCard.vue'
 import TodoCard from './TodoCard.vue'
 import { ref } from 'vue'
+import { useTodosStore, type Todo } from '@/stores/todos'
 
-export type Todo = {
-  isComplete: boolean
-  task: string
-  id: string
-}
+const todoStore = useTodosStore()
 
 type FilterType = 'all' | 'completed' | 'active'
-
-const props = defineProps<{
-  todos: Todo[]
-}>()
-const emit = defineEmits<{
-  (e: 'removeTodo', value: Todo[]): void
-}>()
 
 function bindProps(type: FilterType) {
   return {
@@ -33,11 +23,11 @@ function bindProps(type: FilterType) {
 const filteredTodos = computed(() => {
   switch (activeFilter.value) {
     case 'completed':
-      return props.todos.filter((item) => item.isComplete)
+      return todoStore.todos.filter(todo => todo.isComplete)
     case 'active':
-      return props.todos.filter((item) => !item.isComplete)
+      return todoStore.todos.filter(todo => !todo.isComplete)
     default:
-      return props.todos
+      return todoStore.todos
   }
 })
 const activeFilter = ref<FilterType>('all')
@@ -50,32 +40,24 @@ const activeFilter = ref<FilterType>('all')
       :key="todo.id"
       :todo="todo"
       :active-input="false"
-      @remove-todo="(item: Todo[]) => emit('removeTodo', item )"
+      @remove-todo="(item: Todo) => todoStore.removeTodo(item.id)"
     ></TodoCard>
     <BaseCard
       class="text-xs text-d-gray-blue"
       :class="{ 'rounded-t-none': filteredTodos.length > 0 }"
     >
       <template #header>
-        <p class="pointer-events-none">{{ todos.filter(item => !item.isComplete).length }} items left</p>
+        <p class="pointer-events-none">{{ todoStore.todos.filter(todo => !todo.isComplete).length }} items left</p>
       </template>
       <template #content>
         <div class="hidden ml-auto text-xs font-bold cursor-pointer sm:flex">
-        <div v-bind="bindProps('all')" class="mr-2 hover:text-vd-gray-blue">All</div>
-        <div v-bind="bindProps('active')" class="ml-2 mr-2 hover:text-vd-gray-blue">Active</div>
-        <div v-bind="bindProps('completed')" class="ml-2 hover:text-vd-gray-blue">Completed</div>
+          <div v-bind="bindProps('all')" class="mr-2 hover:text-vd-gray-blue">All</div>
+          <div v-bind="bindProps('active')" class="ml-2 mr-2 hover:text-vd-gray-blue">Active</div>
+          <div v-bind="bindProps('completed')" class="ml-2 hover:text-vd-gray-blue">Completed</div>
         </div>
       </template>
       <template #footer>
-        <div
-          class="ml-auto cursor-pointer hover:text-vd-gray-blue"
-          @click="
-            emit(
-              'removeTodo',
-              todos.filter((item) => item.isComplete)
-            )
-          "
-        >
+        <div class="ml-auto cursor-pointer hover:text-vd-gray-blue" @click="_ => todoStore.removeDone()">
           Clear completed
         </div>
       </template>
@@ -93,6 +75,6 @@ const activeFilter = ref<FilterType>('all')
 </template>
 <style>
 .is-active {
-  @apply text-b-blue
+  @apply text-b-blue;
 }
 </style>
