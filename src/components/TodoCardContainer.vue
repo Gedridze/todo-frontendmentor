@@ -23,11 +23,11 @@ function bindProps(type: FilterType) {
 const filteredTodos = computed(() => {
   switch (activeFilter.value) {
     case 'completed':
-      return todoStore.todos.filter(todo => todo.isComplete)
+      return todoStore.todos.value.filter(todo => todo.isComplete)
     case 'active':
-      return todoStore.todos.filter(todo => !todo.isComplete)
+      return todoStore.todos.value.filter(todo => !todo.isComplete)
     default:
-      return todoStore.todos
+      return todoStore.todos.value
   }
 })
 const activeFilter = ref<FilterType>('all')
@@ -47,7 +47,7 @@ const activeFilter = ref<FilterType>('all')
       :class="{ 'rounded-t-none': filteredTodos.length > 0 }"
     >
       <template #header>
-        <p class="pointer-events-none">{{ todoStore.todos.filter(todo => !todo.isComplete).length }} items left</p>
+        <p class="pointer-events-none">{{ todoStore.todos.value.filter(todo => !todo.isComplete).length }} items left</p>
       </template>
       <template #content>
         <div class="hidden ml-auto text-xs font-bold cursor-pointer sm:flex">

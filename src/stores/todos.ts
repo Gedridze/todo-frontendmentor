@@ -12,19 +12,19 @@ export class Todo {
 }
 
 export const useTodosStore = defineStore('todos', () => {
-  let todos = reactive<Todo[]>([])
+  const todos = reactive<{value: Todo[]}>({value: []})
 
   const addTodo = (todo: string) => {
-    todos.push(new Todo(todo))
+    todos.value.push(new Todo(todo))
   }
 
   const removeTodo = (id: string) => {
-    const index = todos.findIndex((item) => item.id === id)
-    todos.splice(index)
+    const index = todos.value.findIndex((item) => item.id === id)
+    todos.value.splice(index)
   }
 
   const removeDone = () => {
-    todos = todos.filter(todo => !todo.isComplete)
+    todos.value = todos.value.filter(todo => !todo.isComplete)
   }
 
   return { todos, addTodo, removeTodo, removeDone }
