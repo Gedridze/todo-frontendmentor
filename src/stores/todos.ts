@@ -20,7 +20,7 @@ export const useTodosStore = defineStore('todos', () => {
 
   const removeTodo = (id: string) => {
     const index = todos.value.findIndex((item) => item.id === id)
-    todos.value.splice(index)
+    todos.value.splice(index, 1)
   }
 
   const removeDone = () => {
