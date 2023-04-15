@@ -16,7 +16,7 @@ const props = defineProps<{
   todos: Todo[]
 }>()
 const emit = defineEmits<{
-  (e: 'removeTodo', value: Todo): void
+  (e: 'removeTodo', value: Todo[]): void
 }>()
 
 function bindProps(type: FilterType) {
@@ -50,7 +50,7 @@ const activeFilter = ref<FilterType>('all')
       :key="todo.id"
       :todo="todo"
       :active-input="false"
-      @remove-todo="(item: Todo) => emit('removeTodo', item)"
+      @remove-todo="(item: Todo[]) => emit('removeTodo', item )"
     ></TodoCard>
     <BaseCard class="text-xs rounded-t-none text-d-gray-blue">
     <template #header>
@@ -66,7 +66,7 @@ const activeFilter = ref<FilterType>('all')
       </div>
     </template>
     <template #footer>
-      <div>
+      <div class="ml-auto cursor-pointer hover:text-vd-gray-blue" @click="emit('removeTodo', todos.filter(item => item.isComplete))">
         Clear completed
       </div>
     </template>

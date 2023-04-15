@@ -11,10 +11,11 @@ function addTodo(todo: string) {
   })
 }
 
-function removeTodo(deletedTodo: Todo) {
-  console.log('removing', deletedTodo)
-  const index = todos.value.findIndex(todo => todo.id === deletedTodo.id)
-  todos.value.splice(index, 1)
+function removeTodo(deletedTodo: Todo[]) {
+  deletedTodo.forEach(item => {
+    let index = todos.value.findIndex(todo => todo.id === item.id)
+    todos.value.splice(index, 1)
+  })
 }
 </script>
 <template>
