@@ -46,7 +46,7 @@ function submitTodo(evt: Event) {
       <TodoCheckBox :disabled="!activeCheckbox" v-model="todoItem.isComplete" />
     </template>
     <template #content>
-      <div class="flex w-full pr-3" :class="{'hoverable cursor-pointer': !activeInput}" @click="emit('removeTodo', todoItem)">
+      <div class="flex w-full pr-3" :class="{'hoverable cursor-grab': !activeInput}">
       <form @submit="submitTodo" class="w-full" >
         <input
           type="text"

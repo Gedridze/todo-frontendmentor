@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import BaseCard from './BaseCard.vue'
 import TodoCard from './TodoCard.vue'
 import { ref } from 'vue'
 import { useTodosStore, type Todo } from '@/stores/todos'
+import { Sortable } from '@shopify/draggable'
 
+const itemContainer = ref<HTMLUListElement>()
+
+onMounted(() => {
+  console.log('mounted')
+  const sortable = new Sortable([itemContainer.value!], {
+    draggable: 'li'
+  })
+})
 const todoStore = useTodosStore()
-
 type FilterType = 'all' | 'completed' | 'active'
 
 function bindProps(type: FilterType) {
@@ -23,9 +31,9 @@ function bindProps(type: FilterType) {
 const filteredTodos = computed(() => {
   switch (activeFilter.value) {
     case 'completed':
-      return todoStore.todos.value.filter(todo => todo.isComplete)
+      return todoStore.todos.value.filter((todo) => todo.isComplete)
     case 'active':
-      return todoStore.todos.value.filter(todo => !todo.isComplete)
+      return todoStore.todos.value.filter((todo) => !todo.isComplete)
     default:
       return todoStore.todos.value
   }
@@ -34,20 +42,24 @@ const activeFilter = ref<FilterType>('all')
 </script>
 <template>
   <div class="rounded-lg shadow-xl">
-    <TodoCard
-      class="border-b rounded-none first:rounded-t-lg border-l-gray-blue dark:border-d-grayish-blue"
-      v-for="todo in filteredTodos"
-      :key="todo.id"
-      :todo="todo"
-      :active-input="false"
-      @remove-todo="(item: Todo) => todoStore.removeTodo(item.id)"
-    ></TodoCard>
+    <ul ref="itemContainer">
+      <li v-for="todo in filteredTodos" :key="todo.id">
+        <TodoCard
+          class="border-b rounded-none first:rounded-t-lg border-l-gray-blue dark:border-d-grayish-blue"
+          :todo="todo"
+          :active-input="false"
+          @remove-todo="(item: Todo) => todoStore.removeTodo(item.id)"
+        ></TodoCard>
+      </li>
+    </ul>
     <BaseCard
       class="text-xs text-d-gray-blue"
       :class="{ 'rounded-t-none': filteredTodos.length > 0 }"
     >
       <template #header>
-        <p class="pointer-events-none">{{ todoStore.todos.value.filter(todo => !todo.isComplete).length }} items left</p>
+        <p class="pointer-events-none">
+          {{ todoStore.todos.value.filter((todo) => !todo.isComplete).length }} items left
+        </p>
       </template>
       <template #content>
         <div class="hidden ml-auto text-xs font-bold cursor-pointer sm:flex">
@@ -57,7 +69,10 @@ const activeFilter = ref<FilterType>('all')
         </div>
       </template>
       <template #footer>
-        <div class="ml-auto cursor-pointer hover:text-vd-gray-blue" @click="_ => todoStore.removeDone()">
+        <div
+          class="ml-auto cursor-pointer hover:text-vd-gray-blue"
+          @click="(_) => todoStore.removeDone()"
+        >
           Clear completed
         </div>
       </template>
